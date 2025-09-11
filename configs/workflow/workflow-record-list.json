@@ -1,0 +1,64 @@
+{
+  "label": "工作流记录表格",
+  "tag": "workflow-record-list",
+  "icon": "zx-dev-m-gongzuoliu",
+  "templateData": {
+    "componentName": "workflow-record-list",
+    "props": {},
+    "events": {},
+    "style": {},
+    "class": ""
+  },
+  "attrsList": [
+    {
+      "name": "base config",
+      "cname": "基础配置",
+      "type": "group",
+      "children": [
+        {
+          "propName": "busiid",
+          "propCname": "业务id",
+          "tips": "remind",
+          "tipContent": "业务id（busiid ）",
+          "canbind": true,
+          "configEl": {
+            "tag": "el-input"
+          }
+        }
+      ]
+    }
+  ],
+  "styleList": [
+    {
+      "name": "base config",
+      "cname": "样式配置",
+      "type": "group",
+      "children": [
+        {
+          "configEl": {
+            "tag": "config-style",
+            "props": {}
+          }
+        }
+      ]
+    }
+  ],
+  "classList": [
+    {
+      "name": "base config",
+      "cname": "class样式配置",
+      "type": "group",
+      "children": [
+        {
+          "propCname": "绑定class",
+          "propName": "class",
+          "canbind": true,
+          "configEl": {
+            "tag": "zx-classbind-editor",
+            "props": {}
+          }
+        }
+      ]
+    }
+  ]
+}

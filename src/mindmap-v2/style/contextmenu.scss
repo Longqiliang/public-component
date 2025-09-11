@@ -1,0 +1,81 @@
+.mindmap-contextmenu {
+  position: fixed;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1a1a1a;
+
+  &.menus {
+    width: 250px;
+    background: #fff;
+    box-shadow: 0 4px 12px 0 hsla(0, 0%, 69%, 0.5);
+    border-radius: 4px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    &.isDark {
+      background: #363b3f;
+    }
+  }
+
+  .menu-item {
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+
+    &.danger {
+      color: #f56c6c;
+    }
+
+    &:hover {
+      background: #f5f5f5;
+
+      .sub-menus {
+        visibility: visible;
+      }
+    }
+
+    &.disabled {
+      color: grey;
+      cursor: not-allowed;
+      pointer-events: none;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+
+    .name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .desc {
+      color: #999;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub-menus {
+      position: absolute;
+      left: 100%;
+      top: 0;
+      visibility: hidden;
+    }
+  }
+
+  &.isDark {
+    color: #fff;
+
+    .menu-item {
+      &:hover {
+        background: hsla(0, 0%, 100%, 0.05);
+      }
+    }
+  }
+}

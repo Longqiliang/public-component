@@ -1,0 +1,72 @@
+.mindmap-navigator {
+  &-container {
+    user-select: none;
+    padding: 0 12px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: hsla(0, 0%, 100%, 0.8);
+    border-radius: 5px;
+    opacity: 0.8;
+    height: 44px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+  }
+
+  &-item {
+    margin-right: 20px;
+  }
+
+  &-btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+  }
+}
+
+.mindmap-scale-container {
+  display: flex;
+  align-items: center;
+
+  &.isDark {
+    .btn {
+      color: hsla(0, 0%, 100%, 0.6);
+    }
+
+    .scaleInfo {
+      color: hsla(0, 0%, 100%, 0.6);
+
+      input {
+        color: hsla(0, 0%, 100%, 0.6);
+      }
+    }
+  }
+
+  .scale-btn {
+    cursor: pointer;
+  }
+
+  .scaleInfo {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 35px;
+      text-align: center;
+      background-color: transparent;
+      border: none;
+      outline: none;
+    }
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .mindmap-navigator-container {
+    left: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 60px;
+  }
+}

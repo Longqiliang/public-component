@@ -1,0 +1,249 @@
+{
+    "label": "思维导图",
+    "tag": "zx-mindmap-v2",
+    "icon": "zx-dev-m-siweidaotu",
+    "templateData": {
+        "style": {
+            "width": "100%",
+            "boxSizing": "border-box",
+            "height": "500px"
+        },
+        "componentName": "zx-mindmap-v2",
+        "class": "",
+        "events": {},
+        "props": {
+            "layout": "logicalStructure",
+            "ref": "mindMap",
+            "readonly": true,
+            "sidebar": true,
+            "popover": false,
+            "contextmenu": true,
+            "name": "思维导图",
+            "navigator": true,
+            "vModel": "",
+            "props": {
+                "children": "children",
+                "label": "text",
+                "id": "id"
+            }
+        }
+    },
+    "allow": [
+        "all"
+    ],
+    "styleList": [
+        {
+            "children": [
+                {
+                    "configEl": {
+                        "tag": "config-style",
+                        "props": {}
+                    }
+                }
+            ],
+            "name": "base config",
+            "cname": "样式配置",
+            "type": "group"
+        }
+    ],
+    "attrsList": [
+        {
+            "children": [
+                {
+                    "configEl": {
+                        "tag": "zx-input-common-bind",
+                        "props": {
+                            "placeholder": "字段（v-model）"
+                        }
+                    },
+                    "propCname": "绑定数据",
+                    "propName": "vModel",
+                    "tips": "required"
+                },
+                {
+                    "configEl": {
+                        "tag": "el-input",
+                        "props": {}
+                    },
+                    "propCname": "组件引用ref",
+                    "propName": "ref"
+                },
+                {
+                    "configEl": {
+                        "tag": "el-input",
+                        "props": {
+                            "placeholder": "思维导图"
+                        }
+                    },
+                    "canbind": true,
+                    "propCname": "思维导图名称",
+                    "propName": "name"
+                },
+                {
+                    "configEl": {
+                        "tag": "zx-select",
+                        "props": {
+                            "filterable": true,
+                            "options": [
+                                {
+                                    "label": "逻辑结构图",
+                                    "value": "logicalStructure"
+                                },
+                                {
+                                    "label": "思维导图",
+                                    "value": "mindMap"
+                                }
+                            ],
+                            "placeholder": "布局"
+                        }
+                    },
+                    "canbind": true,
+                    "propCname": "布局",
+                    "propName": "layout"
+                },
+                {
+                    "configEl": {
+                        "tag": "zx-select",
+                        "props": {
+                            "filterable": true,
+                            "options": [
+                                {
+                                    "label": "默认",
+                                    "value": "default"
+                                },
+                                {
+                                    "label": "脑图经典",
+                                    "value": "classic"
+                                },
+                                {
+                                    "label": "脑图经典2",
+                                    "value": "classic2"
+                                },
+                                {
+                                    "label": "脑图经典3",
+                                    "value": "classic3"
+                                },
+                                {
+                                    "label": "脑图经典4",
+                                    "value": "classic4"
+                                },
+                                {
+                                    "label": "天清绿",
+                                    "value": "skyGreen"
+                                },
+                                {
+                                    "label": "金色vip",
+                                    "value": "gold"
+                                },
+                                {
+                                    "label": "暗色",
+                                    "value": "dark"
+                                },
+                                {
+                                    "label": "简约黑",
+                                    "value": "simpleBlack"
+                                },
+                                {
+                                    "label": "红色精神",
+                                    "value": "redSpirit"
+                                }
+                            ]
+                        }
+                    },
+                    "canbind": true,
+                    "propCname": "主题",
+                    "propName": "theme"
+                },
+                {
+                    "tipContent": "开启后，用户不可编辑思维导图，如options中配置了readonly 属性，任以当前属性为准",
+                    "configEl": {
+                        "tag": "el-switch"
+                    },
+                    "canbind": true,
+                    "propCname": "只读模式",
+                    "propName": "readonly",
+                    "tips": "remind"
+                },
+                {
+                    "tipContent": "默认字段配置为 label: text, id: uid, children: children",
+                    "configEl": {
+                        "tag": "json-setter",
+                        "props": {
+                            "label": "编辑字段",
+                            "value": {
+                                "children": "children",
+                                "label": "text",
+                                "id": "uid"
+                            }
+                        }
+                    },
+                    "canbind": true,
+                    "propCname": "节点数据字段配置",
+                    "propName": "props",
+                    "tips": "remind"
+                },
+                {
+                    "tipContent": "可通过该配置设置主题、布局、节点样式等，具体配置项可参考 simple-mind-map 文档",
+                    "configEl": {
+                        "tag": "json-setter",
+                        "props": {
+                            "label": "mindmapOptions"
+                        }
+                    },
+                    "canbind": true,
+                    "propCname": "思维导图配置项",
+                    "propName": "options",
+                    "tips": "remind"
+                },
+                {
+                    "tipContent": "提供收起，展开，导出等功能",
+                    "configEl": {
+                        "tag": "el-switch"
+                    },
+                    "canbind": true,
+                    "propCname": "侧边栏配置",
+                    "propName": "sidebar",
+                    "tips": "remind"
+                },
+                {
+                    "configEl": {
+                        "tag": "el-switch"
+                    },
+                    "canbind": true,
+                    "propCname": "右键菜单",
+                    "propName": "contextmenu"
+                },
+                {
+                    "configEl": {
+                        "tag": "el-switch"
+                    },
+                    "canbind": true,
+                    "propCname": "缩放导航",
+                    "propName": "navigator"
+                }
+            ],
+            "name": "base config",
+            "cname": "基础配置",
+            "type": "group"
+        }
+    ],
+    "classList": [
+        {
+            "children": [
+                {
+                    "configEl": {
+                        "tag": "zx-classbind-editor",
+                        "props": {}
+                    },
+                    "canbind": true,
+                    "propCname": "绑定class",
+                    "propName": "class"
+                }
+            ],
+            "name": "base config",
+            "cname": "class样式配置",
+            "type": "group"
+        }
+    ],
+    "devTag": "div"
+}

@@ -1,0 +1,396 @@
+{
+  "label": "工作流审批",
+  "tag": "workflow-approval",
+  "icon": "zx-dev-m-gongzuoliu",
+  "templateData": {
+    "componentName": "workflow-approval",
+    "props": {
+      "ref": "waas",
+      "lazy": true,
+      "showOpinion": true,
+      "proxy": "/waas"
+    },
+    "events": {},
+    "style": {},
+    "class": ""
+  },
+  "allow": [
+    "all"
+  ],
+  "slotList": [
+    {
+      "value": "approval",
+      "label": "审批内容插槽",
+      "params": "status"
+    },
+    {
+      "value": "footer",
+      "label": "审批尾部插槽",
+      "params": "status"
+    }
+  ],
+  "attrsList": [
+    {
+      "name": "base config",
+      "cname": "基础配置",
+      "type": "group",
+      "children": [
+        {
+          "propName": "serviceid",
+          "propCname": "流程服务ID",
+          "type": "inline",
+          "canbind": true,
+          "tips": "required",
+          "tipContent": "流程服务编号（serviceid ）或者 流程实例编号(deployid)",
+          "configEl": {
+            "tag": "zx-waas-attr-editor"
+          }
+        },
+        {
+          "propName": "taskid",
+          "propCname": "任务编号",
+          "tips": "remind",
+          "tipContent": "任务编号（taskid ）",
+          "canbind": true,
+          "configEl": {
+            "tag": "el-input"
+          }
+        },
+        {
+          "propName": "busiid",
+          "propCname": "业务id",
+          "tips": "remind",
+          "tipContent": "业务id（busiid ）",
+          "canbind": true,
+          "configEl": {
+            "tag": "el-input"
+          }
+        },
+        {
+          "propName": "appid",
+          "propCname": "应用id",
+          "tips": "remind",
+          "tipContent": "应用id（appid ）",
+          "canbind": true,
+          "configEl": {
+            "tag": "el-input"
+          }
+        },
+        {
+          "propName": "formData",
+          "propCname": "额外参数",
+          "canbind": true,
+          "tips": "remind",
+          "tipContent": "表单传递至工作流的额外参数（object）,该参数会传至工作流的所有api中",
+          "configEl": {
+            "tag": "json-setter",
+            "props": {
+              "label": "formData"
+            }
+          }
+        },
+        {
+          "propName": "qyid",
+          "propCname": "企业id",
+          "tips": "required",
+          "configEl": {
+            "tag": "zx-input-common-bind",
+            "props": {
+              "placeholder": "企业id"
+            }
+          }
+        },
+        {
+          "propName": "userinfo",
+          "propCname": "用户信息",
+          "tips": "remind",
+          "tipContent": "默认取sessionstorage中的user对象",
+          "canbind": true,
+          "configEl": {
+            "tag": "json-setter",
+            "props": {
+              "label": "userinfo"
+            }
+          }
+        },
+        {
+          "propName": "businame",
+          "propCname": "流程标题",
+          "canbind": true,
+          "configEl": {
+            "tag": "el-input"
+          }
+        },
+        {
+          "propCname": "编辑查看办理版面",
+          "type": "accordion",
+          "openAccordion": false,
+          "children": [
+            {
+              "propName": "lazy",
+              "propCname": "是否自动初始化",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "showNextNode",
+              "propCname": "下一节点显示",
+              "configEl": {
+                "tag": "el-switch"
+              },
+              "canbind": true
+            },
+            {
+              "propName": "showOpinion",
+              "canbind": true,
+              "propCname": "是否显示意见",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "approverVisible",
+              "canbind": true,
+              "propCname": "承办人显示",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "approverRequired",
+              "canbind": true,
+              "propCname": "承办人必填",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "approverDisabled",
+              "canbind": true,
+              "propCname": "承办人禁用",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "copierRequired",
+              "canbind": true,
+              "propCname": "抄送人必填",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            },
+            {
+              "propName": "copierDisabled",
+              "canbind": true,
+              "propCname": "抄送人禁用",
+              "configEl": {
+                "tag": "el-switch"
+              }
+            }
+          ]
+        },
+        {
+          "propCname": "高级配置",
+          "type": "accordion",
+          "openAccordion": false,
+          "children": [
+            {
+              "propName": "ref",
+              "propCname": "组件引用ref",
+              "configEl": {
+                "tag": "el-input",
+                "props": {}
+              }
+            },
+            {
+              "propName": "proxy",
+              "propCname": "代理前缀",
+              "tips": "remind",
+              "tipContent": "代理前缀（默认为 /waas ）",
+              "canbind": true,
+              "configEl": {
+                "tag": "el-input"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "base control",
+      "cname": "控制指令",
+      "type": "group",
+      "children": [
+        {
+          "propName": "vIf",
+          "propCname": "是否创建v-if",
+          "canbind": true,
+          "configEl": {}
+        },
+        {
+          "propName": "vShow",
+          "propCname": "是否显示v-show",
+          "canbind": true,
+          "configEl": {}
+        }
+      ]
+    }
+  ],
+  "eventsList": [
+    {
+      "name": "event config",
+      "cname": "事件配置",
+      "type": "eventgroup",
+      "children": [
+        {
+          "propName": "mode-change",
+          "propCname": "操作改变时触发",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "handelModeChange",
+              "params": "mode"
+            }
+          }
+        },
+        {
+          "propName": "approver-change",
+          "propCname": "承办人改变时触发",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "handelApproverChange",
+              "params": "data, key",
+              "paramsDic": "参数：承办人数据对象, 下一节点id"
+            }
+          }
+        },
+        {
+          "propName": "approver-list-change",
+          "propCname": "承办人列表改变时触发",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "handelApproverListChange",
+              "params": "data, key, listMap",
+              "paramsDic": "参数：承办人列表数据, 下一节点id, 承办人列表Map"
+            }
+          }
+        },
+        {
+          "propName": "nextnode-change",
+          "propCname": "下一节点改变时触发",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "handelNextNodeChange",
+              "params": "value, data"
+            }
+          }
+        },
+        {
+          "propName": "lastnode-change",
+          "propCname": "上一节点改变时触发",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "handleLastNodeChange",
+              "params": "value, data"
+            }
+          }
+        },
+        {
+          "propName": "submit",
+          "propCname": "提交事件",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "submit",
+              "params": "data,state,callback",
+              "paramsDic": "参数一：提交的数据对象,参数二：状态对象,参数三：事件处理回调函数(请求体对象)"
+            }
+          }
+        },
+        {
+          "propName": "submitSuccess",
+          "propCname": "提交成功后事件",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "submitSuccess",
+              "params": "data,state,responsedata"
+            }
+          }
+        },
+        {
+          "propName": "submitError",
+          "propCname": "提交失败后事件",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "submitError",
+              "params": "data,state,responsedata"
+            }
+          }
+        },
+        {
+          "propName": "submitEnd",
+          "propCname": "提交结束",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "submitEnd",
+              "params": "data,state"
+            }
+          }
+        },
+        {
+          "propName": "initSuccess",
+          "propCname": "初始化成功事件",
+          "configEl": {
+            "tag": "event-setter",
+            "props": {
+              "eventType": "initSuccess",
+              "params": "currentnode"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "styleList": [
+    {
+      "name": "base config",
+      "cname": "样式配置",
+      "type": "group",
+      "children": [
+        {
+          "configEl": {
+            "tag": "config-style",
+            "props": {}
+          }
+        }
+      ]
+    }
+  ],
+  "classList": [
+    {
+      "name": "base config",
+      "cname": "class样式配置",
+      "type": "group",
+      "children": [
+        {
+          "propCname": "绑定class",
+          "propName": "class",
+          "canbind": true,
+          "configEl": {
+            "tag": "zx-classbind-editor",
+            "props": {}
+          }
+        }
+      ]
+    }
+  ]
+}

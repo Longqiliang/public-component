@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "serve": "vite --force",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "element-ui": "2.15.9",
+    "lodash-es": "^4.17.21",
+    "vue": "2.7.14",
+    "vue-router": "^3.6.5",
+    "xss": "^1.0.10"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue2": "^2.3.1",
+    "@vitejs/plugin-vue2-jsx": "^1.1.1",
+    "codexd-ui": "^0.5.144",
+    "vite": "4.0.4"
+  }
+}
