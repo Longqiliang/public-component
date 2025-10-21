@@ -4,7 +4,7 @@
     <template v-if="mindMap">
       <Navigator v-if="navigator" :mindMap="mindMap" />
       <Contextmenu v-if="contextmenu" :mindMap="mindMap" />
-      <SideBar v-if="sidebar" :mindMap="mindMap" :name="name" />
+      <SideBar v-if="sidebar" :mindMap="mindMap" :name="name" :transformXMindStyle="transformXMindStyle" />
       <!-- <Popover
         v-if="popover"
         ref="popoverRef"
@@ -25,17 +25,19 @@
 import MindMap from "simple-mind-map";
 import Select from "simple-mind-map/src/plugins/Select.js";
 import Drag from "simple-mind-map/src/plugins/Drag.js";
-import Export from "simple-mind-map/src/plugins/Export.js";
+import Export from "./plugins/Export.js";
 import ExportPDF from "simple-mind-map/src/plugins/ExportPDF.js";
-import ExportXMind from "simple-mind-map/src/plugins/ExportXMind.js";
+import ExportXMind from "./plugins/ExportXMind.js";
 
 // import Popover from "./popover.vue";
 import Navigator from "./navigator.vue";
 import Contextmenu from "./contextmenu.vue";
 import SideBar from "./sidebar.vue";
 
-import { walkTreeNode, isObject } from "./util";
+import { walkTreeNode, isObject, getPropData } from "./util";
 import { debounce } from 'lodash-es';
+
+import { defaultXMindStyle } from "./defaultStyle.js";
 
 // 注册自定义主题
 // customThemeList.forEach(item => {
@@ -99,6 +101,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    transformXMindStyle: {
+      type: Function,
+      default: defaultXMindStyle
+    }
   },
   watch: {
     value(v) {
@@ -133,18 +139,18 @@ export default {
   },
   methods: {
     normalize(data) {
-      const labelName = this.props?.label || "text";
-      const idName = this.props?.id || "uid";
+
       const childrenName = this.props?.children || "children";
       const result = Array.isArray(data) ? data : [data];
       walkTreeNode(
         result,
         (parent) => {
           if (!parent.data) parent.data = {};
-          parent.data.text = parent[labelName];
-          parent.data.uid = parent[idName];
+          parent.data.text = getPropData(parent, this.props, 'label');
+          parent.data.uid = getPropData(parent, this.props, 'id');
+
           if (childrenName !== 'children') {
-            parent[childrenName] && (parent.children = parent[childrenName]) 
+            parent[childrenName] && (parent.children = parent[childrenName])
           }
         },
         childrenName
@@ -192,7 +198,7 @@ export default {
 
       // 重写 setRootNodeCenter 回到原点方法
       Object.defineProperty(this.mindMap.renderer, 'setRootNodeCenter', {
-        value: function() {
+        value: function () {
           const width = this.mindMap.draw.width()
           const root = this.mindMap.renderer.root
           const left = root.left
@@ -208,7 +214,7 @@ export default {
       })
 
       this.setData(this.value);
-    
+
     },
     doShow(el, event) {
       const { nodeData } = el;

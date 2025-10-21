@@ -47,3 +47,16 @@ export function walkTreeNode(
     }
   })
 }
+
+
+export function getPropData(data = {}, props = {}, prop) {
+  const config = props[prop];
+  if (typeof config === 'function') {
+    return config(data);
+  } else if (typeof config === 'string') {
+    return data[config];
+  } else if (typeof config === 'undefined') {
+    const dataProp = data[prop];
+    return dataProp === 'undefined' ? '' : dataProp;
+  }
+}

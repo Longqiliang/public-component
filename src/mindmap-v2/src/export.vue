@@ -1,14 +1,10 @@
 <template>
-  <el-dialog class="mindmap-export-dialog" title="导出" :append-to-body="true" :visible.sync="syncVisible" width="50%" top="15vh">
+  <el-dialog class="mindmap-export-dialog" title="导出" :append-to-body="true" :visible.sync="syncVisible" width="50%"
+    top="15vh">
     <div class="download-list">
-      <div
-        class="download-list-item"
-        v-for="item in downTypeList"
-        :key="item.type"
-        :class="{ active: exportType === item.type }"
-        @click="exportType = item.type"
-      >
-        <i class="download-list-item__icon" >
+      <div class="download-list-item" v-for="item in downTypeList" :key="item.type"
+        :class="{ active: exportType === item.type }" @click="exportType = item.type">
+        <i class="download-list-item__icon">
           <component :is='item.icon'></component>
         </i>
         <div class="download-list-item__content">
@@ -19,9 +15,7 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="cancel">取消</el-button>
-      <el-button type="primary" :loading="loading" @click="confirm"
-        >确定</el-button
-      >
+      <el-button type="primary" :loading="loading" @click="confirm">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -72,6 +66,9 @@ export default {
       type: Object,
     },
     name: { type: String, default: "思维导图" },
+    transformXMindStyle: {
+      type: Function
+    }
   },
   computed: {
     syncVisible: {
@@ -118,6 +115,10 @@ export default {
           }`
           );
           break;
+        case "xmind":
+          console.log(this.transformXMindStyle, 'this.transformXMindStyle-====')
+          this.export(this.exportType, true, this.name, this.transformXMindStyle);
+          break;
         default:
           this.export(this.exportType, true, this.name);
           break;
@@ -126,4 +127,3 @@ export default {
   },
 };
 </script>
-

@@ -206,6 +206,13 @@
                     "tips": "remind"
                 },
                 {
+                    "tipContent": "自定义XMind导出样式函数， 参数 data: XMind 数据, node: 当前节点对象, index: 当前节点索引 例子: function(data, node, index) { return { style: { background: 'red' } } }",
+                    "tips": "remind",
+                    "canbind": true,
+                    "propCname": "自定义XMind导出样式",
+                    "propName": "transformXMindStyle"
+                },
+                {
                     "configEl": {
                         "tag": "el-switch"
                     },
