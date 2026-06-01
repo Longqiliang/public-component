@@ -104,6 +104,10 @@ export default {
     transformXMindStyle: {
       type: Function,
       default: defaultXMindStyle
+    },
+    normalize: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
@@ -161,9 +165,11 @@ export default {
       if (data.root) {
         this.mindMap.setFullData(data);
       } else {
-        const mindMapData = this.normalize(data);
-
-        this.mindMap.setData(mindMapData);
+        if (this.normalize) {
+          this.mindMap.setData(this.normalize(data));
+        } else {
+          this.mindMap.setData(data);
+        }
       }
       this.mindMap.view.reset();
     },

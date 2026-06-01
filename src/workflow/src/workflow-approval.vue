@@ -1,125 +1,45 @@
 <template>
   <div class="workflow-approval">
     <slot :status="mode"></slot>
-    <zx-form
-      :label-width="labelWidth"
-      :save-label-width="labelWidth"
-      :show-reset="false"
-      :show-save="false"
-      label-position="top"
-      size="medium"
-      :model="$data"
-      @submit="onSubmit"
-      ref="waasForm"
-    >
-      
-      <zx-radio-field
-        label="操作"
-        :options="modeOptions"
-        prop="mode"
-        :rules="[{ required: true, message: '请选择', trigger: 'change' }]"
-        :value="mode"
-        :disabled="modeDisabled"
-        class="has-space workflow-field"
-        key="mode"
-        @change="handleModeChange"
-        v-if="showMode"
-      ></zx-radio-field>
-      
-      <zx-input-field
-        label="当前节点"
-        readonly
-        :value="nodeInfo.nodename"
-        class="has-space workflow-field"
-        v-if="showCurrentNode || isAssist"
-      ></zx-input-field>
+    <zx-form :label-width="labelWidth" :save-label-width="labelWidth" :show-reset="false" :show-save="false"
+      label-position="top" size="medium" :model="$data" @submit="onSubmit" ref="waasForm">
 
-      <flow-distribution
-        label="下一节点"
-        :options="nextOptions"
-        v-bind="nextNodeProps"
-        :approverData.sync="nextApproverDataMap"
-        v-model="nextNodeid"
-        @change="handleNextNodeChange"
-        @approver-change="handleApproverChange"
-        @approver-list-change="handleApproverListChange"
-        v-if="_showNextNode"
-        v-show="showNextNode"
-        ref="nextNodeRef"
-        key="nextNode"
-      ></flow-distribution>
+      <zx-radio-field label="操作" :options="modeOptions" prop="mode"
+        :rules="[{ required: true, message: '请选择', trigger: 'change' }]" :value="mode" :disabled="modeDisabled"
+        class="has-space workflow-field" key="mode" @change="handleModeChange" v-if="showMode"></zx-radio-field>
 
-      <flow-distribution
-        label="退回到"
-        :options="lastOptions"
-        v-bind="lastNodeProps"
-        :approverData.sync="lastApproverDataMap"
-        v-model="lastNodeid"
-        @change="handleLastNodeChange"
-        @approver-list-change="handleLastApproverListChange"
-        v-if="showLastNode"
-        ref="lastNodeRef"
-        key="lastNode"
-      ></flow-distribution>
+      <zx-input-field label="当前节点" readonly :value="nodeInfo.nodename" class="has-space workflow-field"
+        v-if="showCurrentNode || isAssist"></zx-input-field>
+
+      <flow-distribution label="下一节点" :options="nextOptions" v-bind="nextNodeProps"
+        :approverData.sync="nextApproverDataMap" v-model="nextNodeid" @change="handleNextNodeChange"
+        @approver-change="handleApproverChange" @approver-list-change="handleApproverListChange" v-if="_showNextNode"
+        v-show="showNextNode" ref="nextNodeRef" key="nextNode"></flow-distribution>
+
+      <flow-distribution label="退回到" :options="lastOptions" v-bind="lastNodeProps"
+        :approverData.sync="lastApproverDataMap" v-model="lastNodeid" @change="handleLastNodeChange"
+        @approver-list-change="handleLastApproverListChange" v-if="showLastNode" ref="lastNodeRef"
+        key="lastNode"></flow-distribution>
 
 
-      <MemberSelectField
-        label="协办人员"
-        :required="false"
-        :multiple="true"
-        v-model="assister"
-        :data="assisterData"
-        :loading="assisterLoading"
-        key="assister"
-        class="has-space"
-        v-if="showAssister"
-      ></MemberSelectField>
+      <MemberSelectField label="协办人员" :required="false" :multiple="true" v-model="assister" :data="assisterData"
+        :loading="assisterLoading" key="assister" class="has-space" v-if="showAssister"></MemberSelectField>
 
-      <MemberSelectField
-        label="转办人员"
-        :multiple="false"
-        prop="transfer"
-        :rules="[
-          { required: true, message: '请选择转办人', trigger: 'change' }
-        ]"
-        v-model="transfer"
-        :data="transferData"
-        :loading="transferLoading"
-        key="transfer"
-        v-if="showTransfer"
-      >
+      <MemberSelectField label="转办人员" :multiple="false" prop="transfer" :rules="[
+        { required: true, message: '请选择转办人', trigger: 'change' }
+      ]" v-model="transfer" :data="transferData" :loading="transferLoading" key="transfer" v-if="showTransfer">
       </MemberSelectField>
       <!-- 当前节点抄送人 -->
-      <MemberSelectField
-        label="抄送人"
-        prop="currentCopierData"
-        :type="copierLeaf"
-        :rules="copierRules"
-        :multiple="true"
-        :lazy="true"
-        :load-config="copierDataLoadFn"
-        :search-config="copierDataSearchFn"
-        :node-key="copierNodeKey"
-        checkbox-align="right"
-        :class="{ 'has-space': !copierRequired }"
-        :disabled="!currentAllowCopyExt || copierDisabled"
-        v-model="currentCopierData"
-        :defineList="defaultCurrentCopier"
-        key="currentCopierData"
-        v-if="showCurrentCopier"
-      ></MemberSelectField>
+      <MemberSelectField label="抄送人" prop="currentCopierData" :type="copierLeaf" :rules="copierRules" :multiple="true"
+        :lazy="true" :load-config="copierDataLoadFn" :search-config="copierDataSearchFn" :node-key="copierNodeKey"
+        checkbox-align="right" :class="{ 'has-space': !copierRequired }"
+        :disabled="!currentAllowCopyExt || copierDisabled" v-model="currentCopierData"
+        :defineList="defaultCurrentCopier" key="currentCopierData" v-if="showCurrentCopier"></MemberSelectField>
 
       <slot name="approval" :status="mode"></slot>
 
-      <TextareaField
-        :options="opinionData"
-        label="处理意见"
-        select-label="常用意见"
-        placeholder="请选择或输入审批意见"
-        v-model="opinion"
-        class="has-space"
-        v-if="isShowApprovalOpinion"
-      />
+      <TextareaField :options="opinionData" label="处理意见" select-label="常用意见" placeholder="请选择或输入审批意见" v-model="opinion"
+        class="has-space" v-if="isShowApprovalOpinion" />
 
       <slot name="footer" :status="mode">
       </slot>
@@ -181,7 +101,7 @@ export default {
       mode: '',
       modeOptions: [],
 
-       // 节点信息
+      // 节点信息
       nodeInfo: {},
       nodeid: '',
       deployid: '',
@@ -1092,14 +1012,20 @@ export default {
     },
 
     getTransferSubmitData() {
-      const commonData = this.getCommonData();
-      const targetUser = this.transfer.map(pickData);
+      let commonData = this.getCommonData();
+      // 兼容后端数据
       return {
-        ...commonData,
-        targetUser
-      }
+        targetUser: commonData.toDoUsers,
+        taskId: this.taskid,
+        originUser: {
+          userId: this.userinfo.userid,
+          userName: this.userinfo.username,
+          dataType: 'user'
+        },
+        ...commonData
+      };
     },
-    
+
     getBackSubmitData() {
       const commonData = this.getCommonData();
 
@@ -1146,9 +1072,9 @@ export default {
 
       const parentData = this.pnodeid
         ? {
-            pnodeid: this.pnodeid,
-            pbusiid: this.pbusiid
-          }
+          pnodeid: this.pnodeid,
+          pbusiid: this.pbusiid
+        }
         : null;
 
       return {
@@ -1188,7 +1114,7 @@ export default {
             data = this.getAssistSubmitData();
             break;
           case 'transfer':
-            data = this.getTransferSubmitData(); 
+            data = this.getTransferSubmitData();
             break;
           case 'reject':
             data = this.getRejectSubmitData();
@@ -1222,7 +1148,7 @@ export default {
         this.$emit('submit-error', data, state, error);
         return error;
       } finally {
-       
+
 
         this.$emit('submit-end', data, state);
       }
@@ -1390,8 +1316,8 @@ export default {
   .el-select {
     width: 100%;
   }
-  
-  .el-form--label-top .el-form-item__label{
+
+  .el-form--label-top .el-form-item__label {
     padding: 0 0 5px;
   }
 
@@ -1429,7 +1355,7 @@ export default {
     border-radius: inherit;
     padding: 8px 0 0 0;
     border-color: #d2d2d2;
-    
+
     .el-textarea__inner {
       font-size: 16px;
       padding-left: 10px;
@@ -1441,7 +1367,7 @@ export default {
 
     &-extra {
       font-size: 16px;
-      background:#f6f6f6;
+      background: #f6f6f6;
       display: flex;
       justify-content: space-between;
     }
@@ -1456,6 +1382,7 @@ export default {
       align-items: center;
       padding: 0 20px;
       color: #0880f6;
+
       svg {
         fill: currentColor;
         cursor: pointer;
@@ -1465,6 +1392,7 @@ export default {
     &-label {
       color: #0880f6;
       padding: 8px 0;
+
       &.content-center {
         justify-content: center;
       }
